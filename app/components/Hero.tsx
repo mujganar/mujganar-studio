@@ -54,7 +54,7 @@ export default function Hero() {
             letterSpacing: '0.22em',
           }}
         >
-          {t('Istanbul · Clinical Research · VJ Artist', 'İstanbul · Klinik Araştırma · VJ Sanatçısı')}
+          {t('Creative Technologist · Clinical Research Professional', 'Yaratıcı Teknolog · Klinik Araştırma Uzmanı')}
         </motion.p>
 
         {/* Name */}
