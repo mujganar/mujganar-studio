@@ -71,7 +71,7 @@ export default function HeroParticles() {
         velocities[i * 2 + 1] = (Math.random() - 0.5) * 0.0012
 
         const c = PALETTE[Math.floor(Math.random() * PALETTE.length)]
-        const b = 0.37 + Math.random() * 0.75   // +30% brighter than original
+        const b = 0.52 + Math.random() * 1.05   // additional +40% on top of previous boost
         aColor[i * 3]     = c[0] * b
         aColor[i * 3 + 1] = c[1] * b
         aColor[i * 3 + 2] = c[2] * b
@@ -107,20 +107,21 @@ export default function HeroParticles() {
             vec3 tealTint  = vec3(0.290, 0.604, 0.722);  // #4a9ab8
             vec3 sideTint  = mix(greenTint, tealTint, uSide);
 
-            // Distance-based proximity glow
+            // Distance-based proximity glow (~200px radius in world space)
             float dist = length(position.xy - uMouseWorld);
-            float prox = max(0.0, 1.0 - dist / 1.5);
+            float prox = max(0.0, 1.0 - dist / 1.8);
+            float proxSharp = prox * prox;  // quadratic falloff — tighter hot zone
 
             // Tint base color toward active side, amplify near cursor
             vec3 col = aColor;
-            col = mix(col, sideTint * 0.85, 0.3 + prox * 0.35);
-            col += sideTint * prox * 0.28;
+            col = mix(col, sideTint * 0.9, 0.3 + proxSharp * 0.5);
+            col += sideTint * proxSharp * 0.5;  // stronger glow contribution
             vColor = col;
 
-            // Pulse + proximity size boost
+            // Pulse + 3x scale boost near cursor
             float pulse     = 0.82 + 0.18 * sin(uTime * 0.7 + position.x * 2.5 + position.y * 1.8);
-            float sizeBoost = 1.0 + prox * 0.75;
-            vAlpha = pulse * (0.65 + prox * 0.28);
+            float sizeBoost = 1.0 + proxSharp * 2.0;  // 3x at center
+            vAlpha = pulse * (0.65 + proxSharp * 0.5);  // full brightness at center
 
             vec4 mvPos   = modelViewMatrix * vec4(position, 1.0);
             gl_PointSize = aSize * pulse * sizeBoost * (290.0 / -mvPos.z);
