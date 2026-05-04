@@ -1,26 +1,72 @@
 @import "tailwindcss";
 
+/* ─── Design Tokens ─────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Palette */
+  --color-space:     #0a0c0a;
+  --color-surface:   #111411;
+  --color-border:    #1e231e;
+  --color-white:     #f0f2ee;
+  --color-muted:     #8a9288;
+  --color-green-dim: #4a7c3f;
+  --color-green:     #7ab648;
+  --color-teal:      #4a9b8e;
+
+  /* Semantic aliases */
+  --background: var(--color-space);
+  --foreground: var(--color-white);
+  --accent:     var(--color-green);
+
+  /* Typography */
+  --font-serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-mono:  var(--font-jetbrains), "JetBrains Mono", "Courier New", monospace;
 }
 
+/* ─── Tailwind v4 Theme Registration ────────────────────── */
 @theme inline {
+  --color-space:      var(--color-space);
+  --color-surface:    var(--color-surface);
+  --color-border:     var(--color-border);
+  --color-white:      var(--color-white);
+  --color-muted:      var(--color-muted);
+  --color-green-dim:  var(--color-green-dim);
+  --color-green:      var(--color-green);
+  --color-teal:       var(--color-teal);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-accent:     var(--accent);
+  --font-serif:       var(--font-serif);
+  --font-mono:        var(--font-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ─── Base Styles ───────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-mono);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.accent-glow {
+  color: var(--color-green);
+  text-shadow: 0 0 18px color-mix(in srgb, var(--color-green) 40%, transparent);
+}
+
+::selection {
+  background-color: color-mix(in srgb, var(--color-green) 25%, transparent);
+  color: var(--color-white);
 }
