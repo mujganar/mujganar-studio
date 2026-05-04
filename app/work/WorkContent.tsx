@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLang } from '@/app/context/LanguageContext'
 
@@ -529,7 +530,10 @@ function CreativeTab() {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function WorkContent() {
-  const [tab, setTab] = useState<Tab>('creative')
+  const searchParams = useSearchParams()
+  const [tab, setTab] = useState<Tab>(() =>
+    searchParams.get('tab') === 'clinical' ? 'clinical' : 'creative'
+  )
   const { t } = useLang()
 
   return (

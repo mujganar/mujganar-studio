@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import WorkContent from './WorkContent'
 
 export const metadata = {
@@ -6,5 +7,9 @@ export const metadata = {
 }
 
 export default function WorkPage() {
-  return <WorkContent />
+  return (
+    <Suspense fallback={null}>
+      <WorkContent />
+    </Suspense>
+  )
 }
