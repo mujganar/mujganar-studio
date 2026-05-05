@@ -2,9 +2,11 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useLang } from '@/app/context/LanguageContext'
+import { useAudio } from '@/app/context/AudioContext'
 import { audio } from '@/lib/audio'
+import { motion } from 'framer-motion'
 
 const links = [
   { href: '/work',    en: 'Work',    tr: 'Projeler' },
@@ -12,59 +14,37 @@ const links = [
   { href: '/contact', en: 'Contact', tr: 'İletişim' },
 ]
 
-function SoundIcon({ on }: { on: boolean }) {
+function NavSoundIcon({ on }: { on: boolean }) {
+  const bars = [
+    { x: 3,  baseH: 4,  animH: 10, delay: 0 },
+    { x: 8,  baseH: 8,  animH: 14, delay: 0.15 },
+    { x: 13, baseH: 5,  animH: 9,  delay: 0.3 },
+  ]
   return (
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-      <style>{`
-        @keyframes bar1 { 0%,100%{height:4px;y:8px} 50%{height:10px;y:5px} }
-        @keyframes bar2 { 0%,100%{height:8px;y:6px} 50%{height:14px;y:3px} }
-        @keyframes bar3 { 0%,100%{height:5px;y:7px} 50%{height:9px;y:5px} }
-        .b1{animation:${on ? 'bar1 1.1s ease-in-out infinite' : 'none'}}
-        .b2{animation:${on ? 'bar2 0.9s ease-in-out infinite 0.15s' : 'none'}}
-        .b3{animation:${on ? 'bar3 1.3s ease-in-out infinite 0.3s' : 'none'}}
-      `}</style>
-      <rect className="b1" x="3" y="8" width="3" height="4" rx="1" fill="currentColor" />
-      <rect className="b2" x="8" y="6" width="3" height="8" rx="1" fill="currentColor" />
-      <rect className="b3" x="13" y="7" width="3" height="5" rx="1" fill="currentColor" />
+      {bars.map(b => (
+        <motion.rect
+          key={b.x}
+          x={b.x} width={3} rx={1} fill="currentColor"
+          animate={on
+            ? { height: [b.baseH, b.animH, b.baseH], y: [10 - b.baseH / 2, 10 - b.animH / 2, 10 - b.baseH / 2] }
+            : { height: b.baseH, y: 10 - b.baseH / 2 }
+          }
+          transition={on
+            ? { duration: 1.1 + b.delay, repeat: Infinity, delay: b.delay, ease: 'easeInOut' }
+            : { duration: 0.25 }
+          }
+        />
+      ))}
     </svg>
   )
 }
 
 export default function Navbar() {
   const { lang, toggle } = useLang()
+  const { playing, toggle: audioToggle } = useAudio()
   const pathname = usePathname()
-  const [menuOpen,   setMenuOpen]   = useState(false)
-  const [ambientOn,  setAmbientOn]  = useState(false)
-  const [initialized, setInitialized] = useState(false)
-
-  // First-click anywhere starts ambient
-  useEffect(() => {
-    const onFirstClick = () => {
-      if (!initialized) {
-        audio.init()
-        audio.startAmbient()
-        setAmbientOn(true)
-        setInitialized(true)
-      }
-    }
-    window.addEventListener('click', onFirstClick, { once: true })
-    window.addEventListener('touchend', onFirstClick, { once: true })
-    return () => {
-      window.removeEventListener('click', onFirstClick)
-      window.removeEventListener('touchend', onFirstClick)
-    }
-  }, [initialized])
-
-  const handleAmbientToggle = (e: React.MouseEvent) => {
-    e.stopPropagation() // don't fire the first-click handler
-    if (!initialized) {
-      audio.init()
-      setInitialized(true)
-    }
-    audio.toggleAmbient()
-    setAmbientOn(audio.isAmbientOn)
-    audio.click()
-  }
+  const [menuOpen, setMenuOpen] = useState(false)
 
   return (
     <nav
@@ -117,24 +97,22 @@ export default function Navbar() {
 
           {/* Sound toggle */}
           <button
-            onClick={handleAmbientToggle}
+            onClick={() => { audio.click(); audioToggle() }}
             aria-label="Toggle ambient sound"
             className="flex items-center justify-center transition-colors duration-200"
             style={{
-              color: ambientOn ? 'var(--color-green)' : 'var(--color-border)',
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              padding: '2px',
+              color:      playing ? 'var(--color-green)' : 'var(--color-border)',
+              background: 'none', border: 'none', cursor: 'pointer', padding: '2px',
             }}
             onMouseEnter={e => {
-              (e.currentTarget as HTMLButtonElement).style.color = ambientOn ? 'var(--color-green)' : 'var(--color-muted)'
+              audio.hover()
+              ;(e.currentTarget as HTMLButtonElement).style.color = playing ? 'var(--color-green)' : 'var(--color-muted)'
             }}
             onMouseLeave={e => {
-              (e.currentTarget as HTMLButtonElement).style.color = ambientOn ? 'var(--color-green)' : 'var(--color-border)'
+              ;(e.currentTarget as HTMLButtonElement).style.color = playing ? 'var(--color-green)' : 'var(--color-border)'
             }}
           >
-            <SoundIcon on={ambientOn} />
+            <NavSoundIcon on={playing} />
           </button>
 
           {/* Language toggle */}
@@ -144,16 +122,16 @@ export default function Navbar() {
             className="text-xs tracking-widest uppercase transition-colors duration-200 px-2 py-1 rounded"
             style={{
               fontFamily: 'var(--font-mono)',
-              color: 'var(--color-muted)',
+              color:  'var(--color-muted)',
               border: '1px solid var(--color-border)',
             }}
             onMouseEnter={e => {
               audio.hover()
-              ;(e.currentTarget as HTMLButtonElement).style.color = 'var(--color-green)'
+              ;(e.currentTarget as HTMLButtonElement).style.color       = 'var(--color-green)'
               ;(e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--color-green-dim)'
             }}
             onMouseLeave={e => {
-              ;(e.currentTarget as HTMLButtonElement).style.color = 'var(--color-muted)'
+              ;(e.currentTarget as HTMLButtonElement).style.color       = 'var(--color-muted)'
               ;(e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--color-border)'
             }}
           >
@@ -164,11 +142,11 @@ export default function Navbar() {
         {/* Mobile: sound + lang toggle + hamburger */}
         <div className="flex md:hidden items-center gap-3">
           <button
-            onClick={handleAmbientToggle}
+            onClick={() => { audio.click(); audioToggle() }}
             aria-label="Toggle ambient sound"
-            style={{ color: ambientOn ? 'var(--color-green)' : 'var(--color-border)', background: 'none', border: 'none', cursor: 'pointer', padding: '2px' }}
+            style={{ color: playing ? 'var(--color-green)' : 'var(--color-border)', background: 'none', border: 'none', cursor: 'pointer', padding: '2px' }}
           >
-            <SoundIcon on={ambientOn} />
+            <NavSoundIcon on={playing} />
           </button>
 
           <button
@@ -177,7 +155,7 @@ export default function Navbar() {
             className="text-xs tracking-widest uppercase px-2 py-1 rounded"
             style={{
               fontFamily: 'var(--font-mono)',
-              color: 'var(--color-muted)',
+              color:  'var(--color-muted)',
               border: '1px solid var(--color-border)',
             }}
           >
@@ -189,27 +167,20 @@ export default function Navbar() {
             aria-label="Toggle menu"
             className="flex flex-col justify-center gap-1.5 w-6 h-6"
           >
-            <span
-              className="block h-px w-full transition-all duration-300"
-              style={{
-                backgroundColor: 'var(--color-muted)',
-                transform: menuOpen ? 'rotate(45deg) translate(3px, 3px)' : 'none',
-              }}
-            />
-            <span
-              className="block h-px w-full transition-all duration-300"
-              style={{
-                backgroundColor: 'var(--color-muted)',
-                opacity: menuOpen ? 0 : 1,
-              }}
-            />
-            <span
-              className="block h-px w-full transition-all duration-300"
-              style={{
-                backgroundColor: 'var(--color-muted)',
-                transform: menuOpen ? 'rotate(-45deg) translate(3px, -3px)' : 'none',
-              }}
-            />
+            {[
+              menuOpen ? 'rotate(45deg) translate(3px, 3px)' : 'none',
+              null,
+              menuOpen ? 'rotate(-45deg) translate(3px, -3px)' : 'none',
+            ].map((transform, i) => (
+              <span
+                key={i}
+                className="block h-px w-full transition-all duration-300"
+                style={{
+                  backgroundColor: 'var(--color-muted)',
+                  ...(transform !== null ? { transform } : { opacity: menuOpen ? 0 : 1 }),
+                }}
+              />
+            ))}
           </button>
         </div>
       </div>

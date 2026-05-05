@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Cormorant_Garamond, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import { LanguageProvider } from '@/app/context/LanguageContext'
+import { AudioProvider } from '@/app/context/AudioContext'
+import { AudioPanel } from '@/app/components/AudioPanel'
 import Navbar from '@/app/components/Navbar'
 
 const cormorant = Cormorant_Garamond({
@@ -36,8 +38,11 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <LanguageProvider>
-          <Navbar />
-          <main className="flex-1 pt-14">{children}</main>
+          <AudioProvider>
+            <Navbar />
+            <main className="flex-1 pt-14">{children}</main>
+            <AudioPanel />
+          </AudioProvider>
         </LanguageProvider>
       </body>
     </html>
