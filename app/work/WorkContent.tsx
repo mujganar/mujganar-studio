@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLang } from '@/app/context/LanguageContext'
+import { audio } from '@/lib/audio'
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -581,7 +582,8 @@ export default function WorkContent() {
           return (
             <button
               key={id}
-              onClick={() => setTab(id)}
+              onClick={() => { setTab(id); audio.click(); audio.shiftAmbient(id === 'creative' ? 'warm' : 'cool') }}
+              onMouseEnter={() => audio.hover()}
               className="relative px-6 py-3 text-xs uppercase tracking-widest transition-colors duration-200"
               style={{
                 fontFamily: 'var(--font-mono)',

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
 import { useLang } from '@/app/context/LanguageContext'
+import { audio } from '@/lib/audio'
 
 const HeroParticles = dynamic(() => import('./HeroParticles'), { ssr: false })
 
@@ -123,8 +124,8 @@ export default function Hero() {
       {/* ───────────────────────── LEFT PANEL ───────────────────────── */}
       <div
         style={{ ...panelBase, paddingLeft: 'clamp(1.5rem, 5vw, 4rem)', paddingRight: 'clamp(1.5rem, 5vw, 3rem)' }}
-        onClick={() => router.push('/work?tab=creative')}
-        onMouseEnter={() => setHovered('left')}
+        onClick={() => { audio.navigate(); router.push('/work?tab=creative') }}
+        onMouseEnter={() => { setHovered('left'); audio.hover(440) }}
         onMouseLeave={() => setHovered(null)}
         onMouseMove={trackGlow('left')}
       >
@@ -163,8 +164,8 @@ export default function Hero() {
       {/* ───────────────────────── RIGHT PANEL ──────────────────────── */}
       <div
         style={{ ...panelBase, paddingLeft: 'clamp(1.5rem, 5vw, 3rem)', paddingRight: 'clamp(1.5rem, 5vw, 4rem)' }}
-        onClick={() => router.push('/work?tab=clinical')}
-        onMouseEnter={() => setHovered('right')}
+        onClick={() => { audio.navigate(); router.push('/work?tab=clinical') }}
+        onMouseEnter={() => { setHovered('right'); audio.hover(550) }}
         onMouseLeave={() => setHovered(null)}
         onMouseMove={trackGlow('right')}
       >
@@ -249,6 +250,7 @@ export default function Hero() {
           onClick={(e) => e.stopPropagation()}
         >
           <motion.div
+            onMouseEnter={() => audio.hover(880)}
             animate={{
               borderColor: ['rgba(122,182,72,0.25)', 'rgba(122,182,72,0.55)', 'rgba(122,182,72,0.25)'],
             }}

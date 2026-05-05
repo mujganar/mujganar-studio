@@ -3,6 +3,7 @@
 import { useState, FormEvent } from 'react'
 import { motion } from 'framer-motion'
 import { useLang } from '@/app/context/LanguageContext'
+import { audio } from '@/lib/audio'
 
 type Status = 'idle' | 'sending' | 'sent' | 'error'
 
@@ -26,9 +27,10 @@ const BLUR_BORDER  = 'var(--color-border)'
 function Field({ as = 'input', ...props }: { as?: 'input' | 'textarea' } & React.InputHTMLAttributes<HTMLInputElement> & React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
   const [focused, setFocused] = useState(false)
   const style = { ...FIELD_STYLE, borderColor: focused ? FOCUS_BORDER : BLUR_BORDER, transition: 'border-color 0.2s' }
+  const handleFocus = () => { setFocused(true); audio.hover() }
   return as === 'textarea'
-    ? <textarea {...props as React.TextareaHTMLAttributes<HTMLTextAreaElement>} style={style} onFocus={() => setFocused(true)} onBlur={() => setFocused(false)} />
-    : <input    {...props as React.InputHTMLAttributes<HTMLInputElement>}       style={style} onFocus={() => setFocused(true)} onBlur={() => setFocused(false)} />
+    ? <textarea {...props as React.TextareaHTMLAttributes<HTMLTextAreaElement>} style={style} onFocus={handleFocus} onBlur={() => setFocused(false)} />
+    : <input    {...props as React.InputHTMLAttributes<HTMLInputElement>}       style={style} onFocus={handleFocus} onBlur={() => setFocused(false)} />
 }
 
 export default function ContactStrip() {
@@ -45,9 +47,11 @@ export default function ContactStrip() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       })
-      setStatus(res.ok ? 'sent' : 'error')
+      if (res.ok) { setStatus('sent'); audio.success() }
+      else         { setStatus('error'); audio.error() }
     } catch {
       setStatus('error')
+      audio.error()
     }
   }
 
@@ -85,9 +89,9 @@ export default function ContactStrip() {
             {/* Social links */}
             <div className="flex flex-col gap-2 mt-8">
               {[
-                { label: 'LinkedIn',  href: 'https://linkedin.com' },
-                { label: 'Instagram', href: 'https://instagram.com' },
-                { label: 'Email',     href: 'mailto:hello@mujganar.studio' },
+                { label: 'LinkedIn',  href: 'https://linkedin.com',           freq: 440 },
+                { label: 'Instagram', href: 'https://instagram.com',           freq: 550 },
+                { label: 'Email',     href: 'mailto:hello@mujganar.studio',   freq: 660 },
               ].map(link => (
                 <a
                   key={link.label}
@@ -96,8 +100,9 @@ export default function ContactStrip() {
                   rel="noopener noreferrer"
                   className="text-xs uppercase tracking-widest transition-colors duration-200 w-fit"
                   style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-border)', letterSpacing: '0.15em' }}
-                  onMouseEnter={e => (e.currentTarget.style.color = 'var(--color-green)')}
+                  onMouseEnter={e => { audio.hover(link.freq); e.currentTarget.style.color = 'var(--color-green)' }}
                   onMouseLeave={e => (e.currentTarget.style.color = 'var(--color-border)')}
+                  onClick={() => { audio.click(); audio.navigate() }}
                 >
                   {link.label} →
                 </a>
