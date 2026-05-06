@@ -124,7 +124,7 @@ export default function Hero() {
       {/* ───────────────────────── LEFT PANEL ───────────────────────── */}
       <div
         style={{ ...panelBase, paddingLeft: 'clamp(1.5rem, 5vw, 4rem)', paddingRight: 'clamp(1.5rem, 5vw, 3rem)' }}
-        onClick={() => { audio.navigate(); router.push('/work?tab=creative') }}
+        onClick={() => { audio.navigate(); router.push('/creative') }}
         onMouseEnter={() => { setHovered('left'); audio.hover(440) }}
         onMouseLeave={() => setHovered(null)}
         onMouseMove={trackGlow('left')}
@@ -164,7 +164,7 @@ export default function Hero() {
       {/* ───────────────────────── RIGHT PANEL ──────────────────────── */}
       <div
         style={{ ...panelBase, paddingLeft: 'clamp(1.5rem, 5vw, 3rem)', paddingRight: 'clamp(1.5rem, 5vw, 4rem)' }}
-        onClick={() => { audio.navigate(); router.push('/work?tab=clinical') }}
+        onClick={() => { audio.navigate(); router.push('/clinical') }}
         onMouseEnter={() => { setHovered('right'); audio.hover(550) }}
         onMouseLeave={() => setHovered(null)}
         onMouseMove={trackGlow('right')}

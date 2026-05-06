@@ -9,12 +9,13 @@ interface AudioState {
   mode:        AmbientMode
   initialized: boolean
   toggle:      () => void
-  setMode:     (m: AmbientMode) => void
+  setMode:     (m: AmbientMode) => void   // user-gesture: starts audio if needed
+  switchMode:  (m: AmbientMode) => void   // safe for useEffect: crossfades if playing, else just sets state
 }
 
 const Ctx = createContext<AudioState>({
   playing: false, mode: 'bio', initialized: false,
-  toggle: () => {}, setMode: () => {},
+  toggle: () => {}, setMode: () => {}, switchMode: () => {},
 })
 
 export function AudioProvider({ children }: { children: React.ReactNode }) {
@@ -39,12 +40,13 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     }
   }, [init])
 
-  const toggle = useCallback(() => {
-    if (!initialized) { init(); return }
-    audio.toggleAmbient()
-    setPlaying(audio.isAmbientOn)
-  }, [initialized, init])
+  // Safe to call from useEffect on page enter — does not create AudioContext
+  const switchMode = useCallback((m: AmbientMode) => {
+    setModeState(m)
+    if (initialized) audio.switchMode(m)   // crossfades if playing, sets _mode if paused
+  }, [initialized])
 
+  // For panel mode buttons — user gesture context, starts audio if needed
   const setMode = useCallback((m: AmbientMode) => {
     setModeState(m)
     if (!initialized) {
@@ -61,8 +63,14 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     }
   }, [initialized])
 
+  const toggle = useCallback(() => {
+    if (!initialized) { init(); return }
+    audio.toggleAmbient()
+    setPlaying(audio.isAmbientOn)
+  }, [initialized, init])
+
   return (
-    <Ctx.Provider value={{ playing, mode, initialized, toggle, setMode }}>
+    <Ctx.Provider value={{ playing, mode, initialized, toggle, setMode, switchMode }}>
       {children}
     </Ctx.Provider>
   )

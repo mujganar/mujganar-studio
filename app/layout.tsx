@@ -4,7 +4,7 @@ import './globals.css'
 import { LanguageProvider } from '@/app/context/LanguageContext'
 import { AudioProvider } from '@/app/context/AudioContext'
 import { AudioPanel } from '@/app/components/AudioPanel'
-import Navbar from '@/app/components/Navbar'
+import { ClientShell } from '@/app/components/ClientShell'
 
 const cormorant = Cormorant_Garamond({
   variable: '--font-cormorant',
@@ -21,26 +21,16 @@ const jetbrains = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: 'Müjgan Armağan Türközü — mujganar.studio',
-  description:
-    'Senior Clinical Research Associate · VJ Artist · Creative Technologist based in Istanbul.',
+  description: 'Senior Clinical Research Associate · VJ Artist · Creative Technologist based in Istanbul.',
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      data-scroll-behavior="smooth"
-      className={`${cormorant.variable} ${jetbrains.variable} h-full`}
-    >
+    <html lang="en" data-scroll-behavior="smooth" className={`${cormorant.variable} ${jetbrains.variable} h-full`}>
       <body className="min-h-full flex flex-col">
         <LanguageProvider>
           <AudioProvider>
-            <Navbar />
-            <main className="flex-1 pt-14">{children}</main>
+            <ClientShell>{children}</ClientShell>
             <AudioPanel />
           </AudioProvider>
         </LanguageProvider>
