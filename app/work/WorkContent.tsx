@@ -237,7 +237,7 @@ function ClinicalTab() {
               style={{ borderTop: '1px solid var(--color-border)' }}
             >
               {/* Number + period */}
-              <div className="shrink-0 w-24 md:w-32 flex flex-col gap-1 pt-1">
+              <div className="shrink-0 w-16 md:w-32 flex flex-col gap-1 pt-1">
                 <span
                   style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-border)', fontSize: '0.7rem', letterSpacing: '0.1em' }}
                 >
@@ -538,7 +538,7 @@ export default function WorkContent() {
   const { t } = useLang()
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-20">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
 
       {/* Page header */}
       <motion.div
@@ -584,7 +584,7 @@ export default function WorkContent() {
               key={id}
               onClick={() => { setTab(id); audio.click(); audio.shiftAmbient(id === 'creative' ? 'warm' : 'cool') }}
               onMouseEnter={() => audio.hover()}
-              className="relative px-6 py-3 text-xs uppercase tracking-widest transition-colors duration-200"
+              className="relative px-4 sm:px-6 text-xs uppercase tracking-widest transition-colors duration-200"
               style={{
                 fontFamily: 'var(--font-mono)',
                 color: active ? 'var(--color-white)' : 'var(--color-muted)',
@@ -592,6 +592,9 @@ export default function WorkContent() {
                 background: 'none',
                 border: 'none',
                 cursor: 'pointer',
+                minHeight: '44px',
+                display: 'flex',
+                alignItems: 'center',
               }}
             >
               {label}

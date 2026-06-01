@@ -143,7 +143,7 @@ export default function SelectedWork() {
   const { t } = useLang()
 
   return (
-    <section className="py-24 px-6">
+    <section className="py-16 sm:py-24 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
 
         <motion.div

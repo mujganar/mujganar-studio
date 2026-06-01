@@ -25,7 +25,7 @@ function Card({ side, title, subtitle, accent, items }: CardProps) {
   return (
     <motion.div
       {...reveal(side === 'clinical' ? 0.1 : 0.25)}
-      className="flex-1 p-8 flex flex-col gap-6 transition-all duration-500"
+      className="flex-1 p-5 sm:p-8 flex flex-col gap-6 transition-all duration-500"
       style={{
         border: '1px solid var(--color-border)',
         minWidth: 0,
@@ -136,7 +136,7 @@ export default function DualIdentity() {
   ]
 
   return (
-    <section className="py-24 px-6">
+    <section className="py-16 sm:py-24 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
 
         {/* Section label */}

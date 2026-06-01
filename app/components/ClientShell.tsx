@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation'
 import Navbar from './Navbar'
 
-const BARE_PATHS = ['/creative', '/clinical']
+const BARE_PATHS = ['/creative', '/clinical', '/about']
 
 export function ClientShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()

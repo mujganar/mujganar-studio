@@ -49,6 +49,7 @@
 html {
   color-scheme: dark;
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -59,6 +60,22 @@ body {
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Prevent iOS auto-zoom on focused inputs (requires font-size >= 16px) */
+@media (max-width: 767px) {
+  input,
+  textarea,
+  select {
+    font-size: 1rem !important;
+  }
+}
+
+/* Minimum touch target size for interactive elements */
+button,
+a {
+  touch-action: manipulation;
 }
 
 .accent-glow {

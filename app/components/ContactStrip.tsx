@@ -11,14 +11,15 @@ const vp = { once: true, margin: '-60px' }
 
 const FIELD_STYLE = {
   fontFamily: 'var(--font-mono)',
-  fontSize: '0.8125rem',
+  fontSize: '1rem',
   background: 'transparent',
   color: 'var(--color-white)',
   border: '1px solid var(--color-border)',
   outline: 'none',
   width: '100%',
-  padding: '0.625rem 0.875rem',
+  padding: '0.75rem 0.875rem',
   resize: 'none' as const,
+  minHeight: '44px',
 }
 
 const FOCUS_BORDER = 'var(--color-green-dim)'
@@ -56,9 +57,9 @@ export default function ContactStrip() {
   }
 
   return (
-    <section className="py-24 px-6" style={{ borderTop: '1px solid var(--color-border)' }}>
+    <section className="py-16 sm:py-24 px-4 sm:px-6" style={{ borderTop: '1px solid var(--color-border)' }}>
       <div className="max-w-6xl mx-auto">
-        <div className="flex flex-col md:flex-row gap-16 md:gap-24">
+        <div className="flex flex-col md:flex-row gap-10 md:gap-24">
 
           {/* Left — heading */}
           <motion.div
@@ -87,7 +88,7 @@ export default function ContactStrip() {
             </h2>
 
             {/* Social links */}
-            <div className="flex flex-col gap-2 mt-8">
+            <div className="flex flex-col gap-1 mt-8">
               {[
                 { label: 'LinkedIn',  href: 'https://linkedin.com',           freq: 440 },
                 { label: 'Instagram', href: 'https://instagram.com',           freq: 550 },
@@ -98,8 +99,8 @@ export default function ContactStrip() {
                   href={link.href}
                   target={link.href.startsWith('mailto') ? undefined : '_blank'}
                   rel="noopener noreferrer"
-                  className="text-xs uppercase tracking-widest transition-colors duration-200 w-fit"
-                  style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-border)', letterSpacing: '0.15em' }}
+                  className="text-xs uppercase tracking-widest transition-colors duration-200 flex items-center"
+                  style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-border)', letterSpacing: '0.15em', minHeight: '44px' }}
                   onMouseEnter={e => { audio.hover(link.freq); e.currentTarget.style.color = 'var(--color-green)' }}
                   onMouseLeave={e => (e.currentTarget.style.color = 'var(--color-border)')}
                   onClick={() => { audio.click(); audio.navigate() }}
@@ -164,13 +165,16 @@ export default function ContactStrip() {
                     <button
                       type="submit"
                       disabled={status === 'sending'}
-                      className="text-xs uppercase tracking-widest px-6 py-3 transition-all duration-300"
+                      className="text-xs uppercase tracking-widest px-6 transition-all duration-300"
                       style={{
                         fontFamily: 'var(--font-mono)',
                         color: status === 'sending' ? 'var(--color-border)' : 'var(--color-muted)',
                         border: '1px solid var(--color-border)',
                         letterSpacing: '0.18em',
                         cursor: status === 'sending' ? 'not-allowed' : 'pointer',
+                        minHeight: '44px',
+                        display: 'flex',
+                        alignItems: 'center',
                       }}
                       onMouseEnter={e => {
                         if (status !== 'sending') {

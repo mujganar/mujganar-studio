@@ -144,7 +144,7 @@ export default function Navbar() {
           <button
             onClick={() => { audio.click(); audioToggle() }}
             aria-label="Toggle ambient sound"
-            style={{ color: playing ? 'var(--color-green)' : 'var(--color-border)', background: 'none', border: 'none', cursor: 'pointer', padding: '2px' }}
+            style={{ color: playing ? 'var(--color-green)' : 'var(--color-border)', background: 'none', border: 'none', cursor: 'pointer', padding: '12px 6px', margin: '-12px -6px' }}
           >
             <NavSoundIcon on={playing} />
           </button>
@@ -152,11 +152,17 @@ export default function Navbar() {
           <button
             onClick={() => { audio.click(); toggle() }}
             aria-label="Toggle language"
-            className="text-xs tracking-widest uppercase px-2 py-1 rounded"
+            className="text-xs tracking-widest uppercase"
             style={{
               fontFamily: 'var(--font-mono)',
               color:  'var(--color-muted)',
               border: '1px solid var(--color-border)',
+              padding: '10px 10px',
+              minHeight: '44px',
+              minWidth: '44px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
             {lang === 'en' ? 'TR' : 'EN'}
@@ -165,22 +171,25 @@ export default function Navbar() {
           <button
             onClick={() => { audio.click(); setMenuOpen(o => !o) }}
             aria-label="Toggle menu"
-            className="flex flex-col justify-center gap-1.5 w-6 h-6"
+            className="flex items-center justify-center"
+            style={{ width: '44px', height: '44px', marginRight: '-10px', background: 'none', border: 'none', cursor: 'pointer' }}
           >
-            {[
-              menuOpen ? 'rotate(45deg) translate(3px, 3px)' : 'none',
-              null,
-              menuOpen ? 'rotate(-45deg) translate(3px, -3px)' : 'none',
-            ].map((transform, i) => (
-              <span
-                key={i}
-                className="block h-px w-full transition-all duration-300"
-                style={{
-                  backgroundColor: 'var(--color-muted)',
-                  ...(transform !== null ? { transform } : { opacity: menuOpen ? 0 : 1 }),
-                }}
-              />
-            ))}
+            <div className="flex flex-col justify-center gap-1.5" style={{ width: '22px' }}>
+              {[
+                menuOpen ? 'rotate(45deg) translate(3px, 3px)' : 'none',
+                null,
+                menuOpen ? 'rotate(-45deg) translate(3px, -3px)' : 'none',
+              ].map((transform, i) => (
+                <span
+                  key={i}
+                  className="block h-px w-full transition-all duration-300"
+                  style={{
+                    backgroundColor: 'var(--color-muted)',
+                    ...(transform !== null ? { transform } : { opacity: menuOpen ? 0 : 1 }),
+                  }}
+                />
+              ))}
+            </div>
           </button>
         </div>
       </div>
@@ -196,11 +205,12 @@ export default function Navbar() {
               key={l.href}
               href={l.href}
               onClick={() => { audio.navigate(); setMenuOpen(false) }}
-              className="text-xs uppercase tracking-widest py-2"
+              className="text-xs uppercase tracking-widest flex items-center"
               style={{
                 fontFamily: 'var(--font-mono)',
                 color: pathname === l.href ? 'var(--color-green)' : 'var(--color-muted)',
                 letterSpacing: '0.15em',
+                minHeight: '44px',
               }}
             >
               {lang === 'en' ? l.en : l.tr}

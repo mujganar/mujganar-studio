@@ -155,13 +155,13 @@ function PerformanceCard({ p, index }: { p: typeof PERFORMANCES[0]; index: numbe
         {t(p.roleEn, p.roleTr)}
       </p>
       {(t(p.detailEn, p.detailTr)) && (
-        <p style={{ ...MONO, fontSize: '0.68rem', color: 'var(--color-border)', lineHeight: 1.65, marginBottom: '0.75rem' }}>
+        <p style={{ ...MONO, fontSize: '0.72rem', color: 'var(--color-border)', lineHeight: 1.65, marginBottom: '0.75rem' }}>
           {t(p.detailEn, p.detailTr)}
         </p>
       )}
       <div className="flex flex-wrap gap-1.5">
         {p.tags.map(tag => (
-          <span key={tag} style={{ ...MONO, fontSize: '0.58rem', padding: '2px 7px', color: hovered ? 'var(--color-muted)' : 'var(--color-border)', border: `1px solid ${hovered ? 'rgba(122,182,72,0.3)' : 'rgba(30,35,30,0.8)'}`, letterSpacing: '0.1em', transition: 'color 0.2s, border-color 0.2s' }}>
+          <span key={tag} style={{ ...MONO, fontSize: '0.7rem', padding: '2px 8px', color: hovered ? 'var(--color-muted)' : 'var(--color-border)', border: `1px solid ${hovered ? 'rgba(122,182,72,0.3)' : 'rgba(30,35,30,0.8)'}`, letterSpacing: '0.08em', transition: 'color 0.2s, border-color 0.2s' }}>
             {tag}
           </span>
         ))}
@@ -211,7 +211,8 @@ export default function CreativeContent() {
       initial={{ x: -60, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      style={{ minHeight: '100vh', position: 'relative', cursor: 'none' }}
+      className="md:cursor-none"
+      style={{ minHeight: '100vh', position: 'relative' }}
     >
       {/* ─── Backgrounds ─────────────────────────────────────────────────── */}
       {camState === 'active' && stream && <CameraBackground stream={stream} />}
@@ -244,7 +245,7 @@ export default function CreativeContent() {
                 </svg>
               </div>
 
-              <p style={{ color: 'rgba(122,182,72,0.8)', fontSize: '0.68rem', letterSpacing: '0.18em', marginBottom: '0.75rem' }}>
+              <p style={{ color: 'rgba(122,182,72,0.8)', fontSize: '0.75rem', letterSpacing: '0.14em', marginBottom: '0.75rem' }}>
                 // VISUAL FEED REQUESTED
               </p>
               <p style={{ color: 'var(--color-muted)', fontSize: '0.78rem', lineHeight: 1.7, marginBottom: '2rem', opacity: 0.85 }}>
@@ -257,7 +258,7 @@ export default function CreativeContent() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 <button
                   onClick={enableCamera}
-                  style={{ ...MONO, padding: '0.7rem', background: 'rgba(122,182,72,0.1)', border: '1px solid rgba(122,182,72,0.4)', color: 'var(--color-green)', fontSize: '0.65rem', letterSpacing: '0.18em', cursor: 'pointer', transition: 'background 0.2s, border-color 0.2s' }}
+                  style={{ ...MONO, padding: '0.75rem', background: 'rgba(122,182,72,0.1)', border: '1px solid rgba(122,182,72,0.4)', color: 'var(--color-green)', fontSize: '0.75rem', letterSpacing: '0.14em', cursor: 'pointer', transition: 'background 0.2s, border-color 0.2s', minHeight: '44px' }}
                   onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(122,182,72,0.18)' }}
                   onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(122,182,72,0.1)' }}
                 >
@@ -265,7 +266,7 @@ export default function CreativeContent() {
                 </button>
                 <button
                   onClick={denyCamera}
-                  style={{ ...MONO, padding: '0.6rem', background: 'transparent', border: '1px solid var(--color-border)', color: 'var(--color-muted)', fontSize: '0.65rem', letterSpacing: '0.15em', cursor: 'pointer' }}
+                  style={{ ...MONO, padding: '0.75rem', background: 'transparent', border: '1px solid var(--color-border)', color: 'var(--color-muted)', fontSize: '0.75rem', letterSpacing: '0.12em', cursor: 'pointer', minHeight: '44px' }}
                   onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--color-muted)' }}
                   onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--color-border)' }}
                 >
@@ -289,7 +290,7 @@ export default function CreativeContent() {
           display:        'flex',
           alignItems:     'center',
           justifyContent: 'space-between',
-          padding:        '0 1.5rem',
+          padding:        '0 1rem',
           background:     'rgba(10,12,10,0.75)',
           backdropFilter: 'blur(12px)',
           WebkitBackdropFilter: 'blur(12px)',
@@ -299,27 +300,27 @@ export default function CreativeContent() {
         <button
           onClick={() => { audio.navigate(); router.push('/') }}
           onMouseEnter={() => audio.hover()}
-          style={{ ...MONO, background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-muted)', fontSize: '0.72rem', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+          style={{ ...MONO, background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-muted)', fontSize: '0.75rem', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: '0.4rem', minHeight: '44px' }}
         >
           ← {t('back', 'geri')}
         </button>
-        <p style={{ ...MONO, color: 'rgba(122,182,72,0.8)', fontSize: '0.62rem', letterSpacing: '0.2em' }}>
+        <p style={{ ...MONO, color: 'rgba(122,182,72,0.8)', fontSize: '0.7rem', letterSpacing: '0.15em' }}>
           {t('CREATIVE TECHNOLOGIST', 'YARATICI TEKNOLOG')}
         </p>
-        <p style={{ ...MONO, color: 'var(--color-border)', fontSize: '0.58rem', letterSpacing: '0.12em' }}>
+        <p style={{ ...MONO, color: 'var(--color-border)', fontSize: '0.7rem', letterSpacing: '0.1em' }}>
           ⬤ MODE_{modeLabel}
         </p>
       </div>
 
       {/* ─── Page content ────────────────────────────────────────────────── */}
       <div style={{ position: 'relative', zIndex: 10, paddingTop: '5rem', paddingBottom: '5rem', minHeight: '100vh' }}>
-        <div className="max-w-6xl mx-auto px-6">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
 
           {/* Section: Live Performances */}
           <motion.p
             initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={vp}
             transition={{ duration: 0.6 }}
-            style={{ ...MONO, fontSize: '0.65rem', color: 'var(--color-muted)', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '1.5rem' }}
+            style={{ ...MONO, fontSize: '0.7rem', color: 'var(--color-muted)', letterSpacing: '0.16em', textTransform: 'uppercase', marginBottom: '1.5rem' }}
           >
             {t('Live Performances', 'Canlı Performanslar')}
           </motion.p>
@@ -334,7 +335,7 @@ export default function CreativeContent() {
           <motion.p
             initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={vp}
             transition={{ duration: 0.6 }}
-            style={{ ...MONO, fontSize: '0.65rem', color: 'var(--color-muted)', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '2.5rem' }}
+            style={{ ...MONO, fontSize: '0.7rem', color: 'var(--color-muted)', letterSpacing: '0.16em', textTransform: 'uppercase', marginBottom: '2.5rem' }}
           >
             {t('Capabilities', 'Uzmanlık Alanları')}
           </motion.p>
@@ -356,7 +357,7 @@ export default function CreativeContent() {
           <motion.p
             initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={vp}
             transition={{ duration: 0.6 }}
-            style={{ ...MONO, fontSize: '0.65rem', color: 'var(--color-muted)', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '1.5rem' }}
+            style={{ ...MONO, fontSize: '0.7rem', color: 'var(--color-muted)', letterSpacing: '0.16em', textTransform: 'uppercase', marginBottom: '1.5rem' }}
           >
             {t('Early Career', 'Erken Kariyer')}
           </motion.p>
@@ -395,9 +396,10 @@ export default function CreativeContent() {
         </div>
       </div>
 
-      {/* ─── Custom crosshair cursor ─────────────────────────────────────── */}
+      {/* ─── Custom crosshair cursor (desktop only) ─────────────────────── */}
       <div
         aria-hidden="true"
+        className="hidden md:block"
         style={{
           position:      'fixed',
           left:          cursor.x,

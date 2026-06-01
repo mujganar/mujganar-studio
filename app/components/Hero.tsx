@@ -25,7 +25,7 @@ const T = 'color 0.3s, background 0.3s, border-color 0.3s, opacity 0.3s'
 function labelStyle(active: boolean): React.CSSProperties {
   return {
     fontFamily:   'var(--font-serif)',
-    fontSize:     '32px',
+    fontSize:     'clamp(20px, 5vw, 32px)',
     fontWeight:   400,
     color:        active ? '#0a0c0a' : '#c8ddb8',
     opacity:      0.95,
@@ -105,6 +105,7 @@ export default function Hero() {
 
   const panelBase: React.CSSProperties = {
     flex:          1,
+    minHeight:     '50vh',
     position:      'relative',
     display:       'flex',
     flexDirection: 'column',
@@ -259,9 +260,10 @@ export default function Hero() {
               background:     '#0a0c0a',
               border:         '1px solid',
               backdropFilter: 'blur(8px)',
-              padding:        '28px 48px',
+              padding:        'clamp(16px, 4vw, 28px) clamp(16px, 5vw, 48px)',
               textAlign:      'center',
-              minWidth:       'min(520px, 90vw)',
+              minWidth:       'min(520px, 88vw)',
+              maxWidth:       '92vw',
             }}
           >
             <motion.h1
@@ -270,11 +272,10 @@ export default function Hero() {
               transition={{ duration: 1, delay: 0.4 }}
               style={{
                 fontFamily: 'var(--font-serif)',
-                fontSize:   '48px',
+                fontSize:   'clamp(26px, 7vw, 48px)',
                 fontWeight: 400,
                 color:      'var(--color-white)',
                 lineHeight: 1.15,
-                whiteSpace: 'nowrap',
               }}
             >
               Müjgan Armağan Türközü
@@ -287,7 +288,7 @@ export default function Hero() {
                 fontFamily:    'var(--font-mono)',
                 fontSize:      '13px',
                 color:         'var(--color-muted)',
-                opacity:       0.7,
+                opacity:       0.85,
                 letterSpacing: '0.18em',
                 marginTop:     '0.5rem',
               }}

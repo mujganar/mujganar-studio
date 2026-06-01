@@ -86,7 +86,8 @@ export function AudioPanel() {
         style={{
           position: 'fixed', bottom: '5.5rem', left: '50%',
           transform: 'translateX(-50%)', zIndex: 200,
-          pointerEvents: 'none', whiteSpace: 'nowrap',
+          pointerEvents: 'none',
+          width: 'min(400px, calc(100vw - 2rem))',
         }}
       >
         <AnimatePresence>
@@ -102,12 +103,13 @@ export function AudioPanel() {
                 border: '1px solid rgba(122,182,72,0.25)',
                 padding: '0.75rem 1.25rem',
                 textAlign: 'center',
+                width: '100%',
               }}
             >
-              <p style={{ color: 'rgba(122,182,72,0.85)', fontSize: '0.65rem', letterSpacing: '0.15em', marginBottom: '0.3rem' }}>
+              <p style={{ color: 'rgba(122,182,72,0.85)', fontSize: '0.7rem', letterSpacing: '0.12em', marginBottom: '0.3rem' }}>
                 // AUDIO ENGINE ACTIVE — procedural sound initialized
               </p>
-              <p style={{ color: 'var(--color-muted)', fontSize: '0.6rem', letterSpacing: '0.1em', opacity: 0.7 }}>
+              <p style={{ color: 'var(--color-muted)', fontSize: '0.7rem', letterSpacing: '0.08em', opacity: 0.8 }}>
                 Select a mode or mute in the sound panel →
               </p>
             </motion.div>
@@ -133,15 +135,15 @@ export function AudioPanel() {
                 border: '1px solid rgba(122,182,72,0.2)',
                 padding: '1.1rem',
                 marginBottom: '0.625rem',
-                width: '272px',
+                width: 'min(272px, calc(100vw - 3rem))',
               }}
             >
               {/* Header */}
               <div style={{ marginBottom: '0.875rem', paddingBottom: '0.75rem', borderBottom: '1px solid rgba(122,182,72,0.1)' }}>
-                <p style={{ color: 'rgba(122,182,72,0.75)', fontSize: '0.65rem', letterSpacing: '0.15em', marginBottom: '0.4rem' }}>
+                <p style={{ color: 'rgba(122,182,72,0.75)', fontSize: '0.7rem', letterSpacing: '0.12em', marginBottom: '0.4rem' }}>
                   // AUDIO ENGINE
                 </p>
-                <p style={{ color: 'var(--color-muted)', fontSize: '0.6rem', lineHeight: 1.65, opacity: 0.7 }}>
+                <p style={{ color: 'var(--color-muted)', fontSize: '0.7rem', lineHeight: 1.65, opacity: 0.8 }}>
                   Procedural sound — generated in real time.<br />No files, no tracking.
                 </p>
               </div>
@@ -172,17 +174,17 @@ export function AudioPanel() {
                     >
                       <p style={{
                         color:         active ? 'var(--color-green)' : 'var(--color-muted)',
-                        fontSize:      '0.62rem',
-                        letterSpacing: '0.12em',
+                        fontSize:      '0.7rem',
+                        letterSpacing: '0.1em',
                         marginBottom:  '0.2rem',
                         transition:    'color 0.2s',
                       }}>
                         {m.label}
                       </p>
-                      <p style={{ color: active ? 'rgba(122,182,72,0.65)' : 'var(--color-border)', fontSize: '0.58rem', lineHeight: 1.5, transition: 'color 0.2s' }}>
+                      <p style={{ color: active ? 'rgba(122,182,72,0.65)' : 'var(--color-border)', fontSize: '0.7rem', lineHeight: 1.5, transition: 'color 0.2s' }}>
                         {m.tagline}
                       </p>
-                      <p style={{ color: 'var(--color-border)', fontSize: '0.55rem', marginTop: '0.2rem', opacity: active ? 0.8 : 0.5 }}>
+                      <p style={{ color: 'var(--color-border)', fontSize: '0.7rem', marginTop: '0.2rem', opacity: active ? 0.8 : 0.75 }}>
                         {m.freq}
                       </p>
                     </button>
@@ -195,12 +197,13 @@ export function AudioPanel() {
                 onClick={toggle}
                 style={{
                   width:         '100%',
-                  padding:       '0.45rem',
+                  padding:       '0.55rem',
                   background:    'transparent',
                   border:        `1px solid ${playing ? 'rgba(122,182,72,0.4)' : 'var(--color-border)'}`,
                   color:         playing ? 'var(--color-green)' : 'var(--color-muted)',
-                  fontSize:      '0.62rem',
-                  letterSpacing: '0.18em',
+                  fontSize:      '0.7rem',
+                  letterSpacing: '0.15em',
+                  minHeight:     '44px',
                   cursor:        'pointer',
                   display:       'flex',
                   alignItems:    'center',
@@ -234,8 +237,8 @@ export function AudioPanel() {
             border:        `1px solid ${playing ? 'rgba(122,182,72,0.4)' : 'rgba(30,35,30,0.9)'}`,
             cursor:        'pointer',
             fontFamily:    'var(--font-mono)',
-            fontSize:      '0.62rem',
-            letterSpacing: '0.15em',
+            fontSize:      '0.7rem',
+            letterSpacing: '0.13em',
             color:         playing ? 'var(--color-green)' : 'var(--color-muted)',
             transition:    'border-color 0.3s, color 0.3s',
           }}
