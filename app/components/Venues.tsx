@@ -45,10 +45,10 @@ function Strip({ items, dir = 1, speed = 40 }: { items: string[]; dir?: 1 | -1; 
           <span
             key={i}
             className="text-xs uppercase tracking-widest shrink-0 flex items-center gap-8"
-            style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-border)', letterSpacing: '0.18em' }}
+            style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-muted)', letterSpacing: '0.18em' }}
           >
             {item}
-            <span style={{ color: 'color-mix(in srgb, var(--color-border) 50%, transparent)' }}>·</span>
+            <span style={{ color: 'var(--color-border)' }}>·</span>
           </span>
         ))}
       </motion.div>
@@ -65,7 +65,7 @@ export default function Venues() {
       <div className="px-6 max-w-6xl mx-auto mb-8">
         <p
           className="text-xs uppercase tracking-widest"
-          style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-border)', letterSpacing: '0.2em' }}
+          style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-muted)', letterSpacing: '0.2em' }}
         >
           {t('Venues & Performances', 'Mekanlar & Performanslar')}
         </p>

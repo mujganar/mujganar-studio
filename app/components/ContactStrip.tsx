@@ -87,23 +87,44 @@ export default function ContactStrip() {
               {t("Let's work\ntogether.", 'Birlikte\nçalışalım.')}
             </h2>
 
+            {/* Direct email CTA */}
+            <a
+              href="mailto:contact@mujganar.studio"
+              onClick={() => { audio.click(); audio.navigate() }}
+              onMouseEnter={e => { audio.hover(660); (e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--color-green)'; (e.currentTarget as HTMLAnchorElement).style.color = 'var(--color-white)' }}
+              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--color-green-dim)'; (e.currentTarget as HTMLAnchorElement).style.color = 'var(--color-green)' }}
+              className="flex items-center gap-3 mt-6 transition-all duration-200"
+              style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: '0.8rem',
+                color: 'var(--color-green)',
+                border: '1px solid var(--color-green-dim)',
+                padding: '0.75rem 1rem',
+                letterSpacing: '0.06em',
+                textDecoration: 'none',
+                display: 'inline-flex',
+              }}
+            >
+              <span style={{ fontSize: '1rem' }}>✉</span>
+              contact@mujganar.studio
+            </a>
+
             {/* Social links */}
-            <div className="flex flex-col gap-1 mt-8">
+            <div className="flex flex-col gap-0 mt-6">
               {[
-                { label: 'LinkedIn',  href: 'https://linkedin.com',           freq: 440 },
-                { label: 'Instagram', href: 'https://instagram.com',           freq: 550 },
-                { label: 'Email',     href: 'mailto:hello@mujganar.studio',   freq: 660 },
+                { label: 'LinkedIn',  href: 'https://linkedin.com',  freq: 440 },
+                { label: 'Instagram', href: 'https://instagram.com', freq: 550 },
               ].map(link => (
                 <a
                   key={link.label}
                   href={link.href}
-                  target={link.href.startsWith('mailto') ? undefined : '_blank'}
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="text-xs uppercase tracking-widest transition-colors duration-200 flex items-center"
-                  style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-border)', letterSpacing: '0.15em', minHeight: '44px' }}
+                  style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-muted)', letterSpacing: '0.15em', minHeight: '44px' }}
                   onMouseEnter={e => { audio.hover(link.freq); e.currentTarget.style.color = 'var(--color-green)' }}
-                  onMouseLeave={e => (e.currentTarget.style.color = 'var(--color-border)')}
-                  onClick={() => { audio.click(); audio.navigate() }}
+                  onMouseLeave={e => (e.currentTarget.style.color = 'var(--color-muted)')}
+                  onClick={() => audio.click()}
                 >
                   {link.label} →
                 </a>
